@@ -23,7 +23,7 @@ namespace weatherState
         {
             // SqlServer.Connection();
             Requests.news();
-            ViewData["Message"] = "PUTO";
+            ViewData["Message"] = "Hola";
             return View();
         }
     }
