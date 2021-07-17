@@ -12,7 +12,7 @@ using System.Net.Http.Headers;
 
 namespace weatherState
 {
-    public class Result
+    public class WeatherStatus
     {
         public string name { get; set; }
         public string country { get; set; }
@@ -22,6 +22,19 @@ namespace weatherState
         public double feels_like { get; set; }
         public int pressure { get; set; }
         public int humidity { get; set; }
+        public List<CityNews> citynews { get; set; }
+    }
+
+    public class CityNews
+    {
+        public string name { get; set; }
+        public string author { get; set; }
+        public string title { get; set; }
+        public DateTime publishedAt { get; set; }
+        public string description { get; set; }
+        public string url { get; set; }
+        public string urlToImage { get; set; }
+        public string content { get; set; }
     }
 
     // weather
@@ -113,7 +126,7 @@ namespace weatherState
     }
     public class Requests
     {
-        public static Result weather()
+        public static WeatherStatus news()
         {
             Root weather;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://api.openweathermap.org/data/2.5/weather?q=Bogotá&APPID=4322b65473997aefc011cb7ba01c4eaf");
@@ -124,39 +137,44 @@ namespace weatherState
                 var json = reader.ReadToEnd();
                 weather = JsonConvert.DeserializeObject<Root>(json);
             }
-            Result res = new Result();
+            WeatherStatus res = new WeatherStatus();
             res.name = weather.name;
             res.country = weather.sys.country;
             res.status = weather.weather[0].main;
             res.description = weather.weather[0].description;
-            res.temp = weather.main.temp - 273.15;
-            res.feels_like = weather.main.feels_like - 273.15;
+            res.temp = (Math.Truncate((weather.main.temp - 273.15) * 100) / 100);
+            res.feels_like = (Math.Truncate((weather.main.feels_like - 273.15) * 100) / 100);
             res.pressure = weather.main.pressure;
             res.humidity = weather.main.humidity;
 
-            return res;
-        }
-
-        public static void news()
-        {
             News news;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"https://newsapi.org/v2/everything?q=Bogot%C3%A1&pageSize=1&apiKey=6b113ff4e33a479797dff06834feb41a");
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            HttpWebRequest request1 = (HttpWebRequest)WebRequest.Create(@"https://newsapi.org/v2/everything?q=Bogot%C3%A1&pageSize=2&apiKey=6b113ff4e33a479797dff06834feb41a");
+            using (HttpWebResponse response = (HttpWebResponse)request1.GetResponse())
             using (Stream stream = response.GetResponseStream())
             using (StreamReader reader = new StreamReader(stream))
             {
                 var json = reader.ReadToEnd();
                 news = JsonConvert.DeserializeObject<News>(json);
             }
-            Result res = new Result();
-            res.name = news.name;
-            res.country = news.sys.country;
-            res.status = news.weather[0].main;
-            res.description = news.weather[0].description;
-            res.temp = news.main.temp - 273.15;
-            res.feels_like = news.main.feels_like - 273.15;
-            res.pressure = news.main.pressure;
-            res.humidity = news.main.humidity;
+
+            List<CityNews> cities = new List<CityNews>();
+            for (int i = 0; i < news.articles.Count; i++)
+            {
+                CityNews res1 = new CityNews();
+                res1.name = news.articles[i].source.name;
+                res1.author = news.articles[i].author;
+                res1.title = news.articles[i].title;
+                res1.publishedAt = news.articles[i].publishedAt;
+                res1.description = news.articles[i].description;
+                res1.url = news.articles[i].url;
+                res1.urlToImage = news.articles[i].urlToImage;
+                res1.content = news.articles[i].content;
+                cities.Add(res1);
+            }
+            res.citynews = cities;
+            string jsonString = JsonConvert.SerializeObject(res);
+            Console.WriteLine(jsonString);
+            return res;
         }
     }
 }

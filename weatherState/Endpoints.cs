@@ -18,12 +18,12 @@ namespace weatherState
             return View();
         }
 
-        [HttpGet("searchs")]
-        public IActionResult Searchs()
+        [HttpGet("searches")]
+        public IActionResult Searchs(string city)
         {
-            // SqlServer.Connection();
-            Requests.news();
-            ViewData["Message"] = "Hola";
+            var json = Requests.news();
+            SqlServer.Connection(ref json);
+            ViewData["Message"] = json.name;
             return View();
         }
     }
