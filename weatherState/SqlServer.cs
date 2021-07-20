@@ -144,5 +144,47 @@ namespace weatherState
             }
         }
 
+        public static void Select()
+        {
+            try
+            {
+                Console.WriteLine("Connect to SQL Server and demo Create, Read, Update and Delete operations.");
+
+                // Build connection string
+                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+                builder.DataSource = "localhost";   // update me
+                builder.UserID = "Xvaria";              // update me
+                builder.Password = "Punkyfab231993";      // update me
+                builder.InitialCatalog = "master";
+
+                // Connect to SQL
+                Console.Write("Connecting to SQL Server ... ");
+                using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+                {
+                    connection.Open();
+                    Console.WriteLine("Done.");
+
+                    // READ
+                    Console.WriteLine("Reading data from table, press any key to continue...");
+                    // Console.ReadKey(true);
+                    String sql = "SELECT * FROM News;";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
+                            }
+                        }
+                    }
+                }
+            }
+            catch (SqlException e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
     }
 }

@@ -4,14 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-using NewsAPI;
-using NewsAPI.Models;
-using NewsAPI.Constants;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
 
 namespace weatherState
 {
+    public class City
+    {
+        public string city { get; set; }
+    }
+    public class Comment
+    {
+        public static string comment = "Bogotá";
+    }
     public class WeatherStatus
     {
         public string name { get; set; }
@@ -126,10 +131,10 @@ namespace weatherState
     }
     public class Requests
     {
-        public static WeatherStatus news()
+        public static WeatherStatus create()
         {
             Root weather;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(@"http://api.openweathermap.org/data/2.5/weather?q=Bogotá&APPID=4322b65473997aefc011cb7ba01c4eaf");
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create($@"http://api.openweathermap.org/data/2.5/weather?q={Comment.comment}&APPID=4322b65473997aefc011cb7ba01c4eaf");
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             using (Stream stream = response.GetResponseStream())
             using (StreamReader reader = new StreamReader(stream))
@@ -148,7 +153,7 @@ namespace weatherState
             res.humidity = weather.main.humidity;
 
             News news;
-            HttpWebRequest request1 = (HttpWebRequest)WebRequest.Create(@"https://newsapi.org/v2/everything?q=Bogot%C3%A1&pageSize=2&apiKey=6b113ff4e33a479797dff06834feb41a");
+            HttpWebRequest request1 = (HttpWebRequest)WebRequest.Create($@"https://newsapi.org/v2/everything?q={Comment.comment}1&pageSize=2&apiKey=6b113ff4e33a479797dff06834feb41a");
             using (HttpWebResponse response = (HttpWebResponse)request1.GetResponse())
             using (Stream stream = response.GetResponseStream())
             using (StreamReader reader = new StreamReader(stream))
@@ -175,6 +180,10 @@ namespace weatherState
             string jsonString = JsonConvert.SerializeObject(res);
             Console.WriteLine(jsonString);
             return res;
+        }
+        public static void show()
+        {
+
         }
     }
 }
