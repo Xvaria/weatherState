@@ -50,11 +50,13 @@ class CommentList extends React.Component {
     render() {
         console.log(this.props.data);
         const commentNodes = this.props.data.map(comment => (
-            <Comment author={comment.name} humidi={comment.humidity}>
-                {comment.humidity}
+            <Comment author={comment.name} tem={comment.temp}>
                 {comment.country}
                 {comment.status}
                 {comment.description}
+                {comment.feels_like}
+                {comment.pressure}
+                {comment.humidity}
             </Comment>
         ));
         return <div className="CommentList">{commentNodes}</div>;
@@ -98,7 +100,7 @@ class Comment extends React.Component {
         return (
             <div className="comment">
                 <h2 className="commentAuthor">{this.props.author}</h2>
-                <h3 className="commentAuthor">{this.props.humidi}</h3>
+                <h3 className="commentAuthor">{this.props.tem}</h3>
                 <span dangerouslySetInnerHTML={this.rawMarkup()} />
             </div>
         );

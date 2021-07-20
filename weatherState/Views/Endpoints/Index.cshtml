@@ -1,15 +1,93 @@
 ﻿@{
     Layout = null;
 }
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Hello React</title>
+    <title>Weather Status</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <link rel="shortcut icon" href="">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/menu.css">
+    <link rel="stylesheet" href="./css/wellcome.css">
+    <link rel="stylesheet" href="./css/features.css">
+    <link rel="stylesheet" href="./css/about.css">
 </head>
+
 <body>
-    <div id="content"></div>
-    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/16.13.0/umd/react.development.js"></script>
-    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.13.0/umd/react-dom.development.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
-    <script src="@Url.Content("~/js/Tutorial.jsx")"></script>
+    <header>
+        <div class="container">
+            <h1>Weather Status</h1>
+            <input type="checkbox" id="menu-bar">
+            <label class="icon-menu" for="menu-bar"></label>
+            <nav class="menu">
+                <a href="#wellcome">Welcome</a>
+                <a href="#info">Features</a>
+                <a href="#about">About</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section id="wellcome">
+            <img src="">
+            <div class="container">
+                <h2>Weather Status</h2>
+                <h3>An easy way to follow your city</h3>
+                <a href="/">Login</a>
+            </div>
+        </section>
+        <section id="info">
+            <h2>Weather Status</h2>
+            <h3>It's an automatic way to get the key weather indicators and the latest news about your city, so you know what's happening anytime, anywhere.</h3>
+        </section>
+        <section id="features">
+            <h3>Features</h3>
+            <div class="container">
+                <div class="sub-container1">
+                </div>
+                <div class="sub-container">
+                    <article>
+                        <h4>Fast reports</h4>
+                        <br>
+                        <h5>Generate reports for your city.</h5>
+                    </article>
+                    <article>
+                        <h4>Specific reports</h4>
+                        <br>
+                        <h5></h5>
+                    </article>
+                    <article>
+                        <h4>Unlimited reports</h4>
+                        <br>
+                        <h5>Generate many reports as you need or want! Our platform is free and have not limits for you!</h5>
+                    </article>
+                </div>
+            </div>
+        </section>
+        <section id="about">
+            <div class="container">
+                <h3>About</h3>
+                <div class="dev">
+                    <img class="photo" src="" alt="">
+                    <h4>Diego Ahumada</h4>
+                    <div class="">
+                        <a href=""><img src="" class="link"></a>
+                        <a href=""><img src="" class="link"></a>
+                        <a href=""><img src="" class="link"></a>
+                    </div>
+                </div>
+                <h5>
+                </h5>
+                <h3>This project is open source, if you want to contribute to the project, you can do it</h3>
+                <a class="here" href="https://github.com/Xvaria/weatherState">Here</a>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p class="copy">WeatherStatus &copy; 2021 </p>
+        </div>
+    </footer>
 </body>
 </html>

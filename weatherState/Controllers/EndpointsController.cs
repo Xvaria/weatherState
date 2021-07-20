@@ -9,6 +9,12 @@ namespace weatherState.Controllers
 {
     public class EndpointsController : Controller
     {
+        [Route("/")]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         [Route("now")]
         public ActionResult Now()
         {
@@ -19,16 +25,15 @@ namespace weatherState.Controllers
         [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
         public ActionResult Queries()
         {
-            var json = Json(Requests.create());
-            return json;
+            var json = Requests.create();
+            return Json(json);
         }
 
         [Route("searches")]
         public IActionResult Searches()
         {
-            var json = Requests.create();
-            SqlServer.Connection(ref json);
-            return View();
+            SqlServer.select();
+            return Content("Success :)");
         }
 
         [Route("queries/new")]
@@ -39,7 +44,8 @@ namespace weatherState.Controllers
             if (data.city != null) {
                 Comment.comment = data.city;
             }
-            Requests.create();
+            var json = Requests.create();
+            SqlServer.Connection(ref json);
             return Content("Success :)");
         }
 

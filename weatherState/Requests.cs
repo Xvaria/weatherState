@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Text;
 
 namespace weatherState
 {
@@ -153,7 +154,9 @@ namespace weatherState
             res.humidity = weather.main.humidity;
 
             News news;
-            HttpWebRequest request1 = (HttpWebRequest)WebRequest.Create($@"https://newsapi.org/v2/everything?q={Comment.comment}1&pageSize=2&apiKey=6b113ff4e33a479797dff06834feb41a");
+            byte[] bytes = Encoding.Default.GetBytes(Comment.comment);
+            string newcity = Encoding.UTF32.GetString(bytes);
+            HttpWebRequest request1 = (HttpWebRequest)WebRequest.Create($@"https://newsapi.org/v2/everything?q={newcity}1&pageSize=2&apiKey=6b113ff4e33a479797dff06834feb41a");
             using (HttpWebResponse response = (HttpWebResponse)request1.GetResponse())
             using (Stream stream = response.GetResponseStream())
             using (StreamReader reader = new StreamReader(stream))

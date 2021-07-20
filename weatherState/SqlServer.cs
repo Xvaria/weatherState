@@ -29,9 +29,10 @@ namespace weatherState
                     connection.Open();
                     Console.WriteLine("Done.");
 
+                    //DROP DATABASE IF EXISTS [WeatherStatus];
                     // Create a sample database
                     Console.Write("Dropping and creating database 'SampleDB' ... ");
-                    String sql = "DROP DATABASE IF EXISTS [WeatherStatus]; IF NOT EXISTS (SELECT * FROM sys.databases WHERE name='WeatherStatus') CREATE DATABASE [WeatherStatus]";
+                    String sql = "IF NOT EXISTS (SELECT * FROM sys.databases WHERE name='WeatherStatus') CREATE DATABASE [WeatherStatus]";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.ExecuteNonQuery();
@@ -144,7 +145,7 @@ namespace weatherState
             }
         }
 
-        public static void Select()
+        public static void select()
         {
             try
             {
@@ -165,9 +166,15 @@ namespace weatherState
                     Console.WriteLine("Done.");
 
                     // READ
+                    String sql = "USE WeatherStatus;";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.ExecuteNonQuery();
+                        Console.WriteLine("Done.");
+                    }
                     Console.WriteLine("Reading data from table, press any key to continue...");
                     // Console.ReadKey(true);
-                    String sql = "SELECT * FROM News;";
+                    sql = "SELECT * FROM Weather;";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
 
