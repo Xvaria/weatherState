@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace weatherState.Controllers
 {
@@ -46,6 +47,8 @@ namespace weatherState.Controllers
             }
             var json = Requests.create();
             SqlServer.Connection(ref json);
+            string jsonString = JsonConvert.SerializeObject(json);
+            Console.WriteLine(jsonString);
             return Content("Success :)");
         }
 

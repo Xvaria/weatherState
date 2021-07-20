@@ -180,8 +180,6 @@ namespace weatherState
                 cities.Add(res1);
             }
             res.citynews = cities;
-            string jsonString = JsonConvert.SerializeObject(res);
-            Console.WriteLine(jsonString);
             return res;
         }
         public static void show()

@@ -48,7 +48,6 @@ class CommentBox extends React.Component {
 }
 class CommentList extends React.Component {
     render() {
-        console.log(this.props.data);
         const commentNodes = this.props.data.map(comment => (
             <Comment author={comment.name} tem={comment.temp}>
                 {comment.country}
